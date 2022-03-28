@@ -1,65 +1,111 @@
-import React from "react"
-import {useNavigate} from "react-router-dom"
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+// import { AuthContext } from '../Contexts/AuthContext';
 
-const Register= () => {
+export const Register = () => {
+    // const { login } = React.useContext(AuthContext);
+    const [formDetails, setFormDetails] = React.useState({
+        name: "",
+        email: "",
+        password: "",
+        username: "",
+        mobile: "",
+        description: ""
+    });
     const navigate = useNavigate();
-    
-    const[formDetails,setFormDetails] = React.useState({
-        name:"",
-        email:"",
-        password:"",
-        userName:"",
-        number:"",
-        discription:"",
 
-    })
-    
-    const handelChange = (e) => {
-        const{ name,value} = e.target
-    
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
         setFormDetails({
             ...formDetails,
-            [name]:value
-        })
-        
-    }
+            [name]: value
+        });
+    };
 
-    const handelSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`https://masai-api-mocker.herokuapp.com/auth/register`,{
+
+        // Create post request to set the input data.
+        fetch(`https://masai-api-mocker.herokuapp.com/auth/register`, {
             method: "POST",
             body: JSON.stringify(formDetails),
-            headers: {"content-Type " : "application/json" },
-        }).then((res) =>res.json())
-        .then((res) => console.log(res));
+            headers: { "Content-Type" : "application/json" }
+        })
+            .then((res) => res.json())
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+
+        // console.log(formDetails);
     }
-    const goToLogin = () =>{
-        navigate("/Login")
 
+    const gotoLogin = () => {
+        navigate('/login')
     }
 
-    const{Name,email,password,username,number,discription} = formDetails
+    const {name, email, password, username, mobile, description } = formDetails;
 
+//     "name": "MASAI School",
+//   "email": "hello@masai.com"
+//   "password": "secret",
+//   "username": "masai-school",
+//   "mobile": "9876543210",
+//   "description": "A Transformation in education!" 
 
     return (
-        <div>
-        
-
-        <form onSubmit={handelSubmit}>
-            <input name ="Name" type="text" placeholder="Name" value={Name} onChange ={handelChange} />
-           <input name=  "email" type="text" placeholder="Email" value={email} onChange = {handelChange}/>
-           <input name="password" type="text" placeholder = "password" value = {password} onChange = {handelChange}/>
-           <input name="username" type="text" placeholder = "username" value = {username} onChange = {handelChange}/>
-           <input name="number" type="number" placeholder = "Mobile No." value = {number} onChange = {handelChange}/>
-           <input name="discription" type="text" placeholder = "Description" value = {discription} onChange = {handelChange}/><br /><br />
-
-           <input type="submit"  /><br /><br />
-
-           <button onClick={goToLogin}>Redirect to the login page</button>
-           
-           </form>
-           </div>
+        <form onSubmit={handleSubmit}>
+            <h1>Register Page</h1>
+            <input
+                name='name'
+                type='text'
+                placeholder='Name'
+                value={name}
+                onChange={handleChange}
+            />
+            <br/>
+            <input
+                name='email'
+                type='text'
+                placeholder='Email'
+                value={email}
+                onChange={handleChange}
+            />
+            <br/>
+            <input
+                name='password'
+                type='text'
+                placeholder='Password'
+                value={password}
+                onChange={handleChange}
+            />
+            <br/>
+            <input
+                name='username'
+                type='text'
+                placeholder='Username'
+                value={username}
+                onChange={handleChange}
+            />
+            <br/>
+            <input
+                name='mobile'
+                type='number'
+                placeholder='Mobile'
+                value={mobile}
+                onChange={handleChange}
+            />
+            <br/>
+            <input
+                name='description'
+                type='text'
+                placeholder='Description'
+                value={description}
+                onChange={handleChange}
+            />
+            <br/>
+            <input type='submit' value='REGISTER' />
+            <br/>
+            <button onClick={gotoLogin}>Redirect to login page</button>
+        </form>
     )
 }
-
-export {Register}
