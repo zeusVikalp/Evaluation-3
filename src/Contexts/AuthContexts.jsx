@@ -7,16 +7,18 @@ export const AuthContextsProvider = ({children}) => {
     
     const[isAuth,setisAuth] = React.useState(false);
     const[token,setToken] = React.useState('')
+    const[username,setUsername] = React.useState("")
     const navigate = useNavigate()
 
-    const login = (token) => {
+    const login = (token,username) => {
         setisAuth(true)
         setToken(token)
+        setUsername(username)
         navigate(`/`)
 
     }
 
 
 
-    return <AuthContexts.Provider value = {{isAuth,login,token}}>{children}</AuthContexts.Provider>
+    return <AuthContexts.Provider value = {{isAuth,login,username,token}}>{children}</AuthContexts.Provider>
 }
