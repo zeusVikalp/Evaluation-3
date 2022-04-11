@@ -6,7 +6,7 @@ import {Products} from "./Components/Products"
 import {Login} from "./Components/Login"
 import {Register} from "./Components/Register"
 
-import './App.css';
+
 
 function App() {
   return (
